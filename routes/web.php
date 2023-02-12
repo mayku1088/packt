@@ -22,7 +22,7 @@ Route::get('/add-book', [\App\Http\Controllers\Admin\BookController::class, 'add
 
 Route::get('/book/{book_id}/edit', [\App\Http\Controllers\Admin\BookController::class, 'edit_book']);
 
-
+Route::get('/', [\App\Http\Controllers\Front\HomeController::class, 'home']);
 
 /*Route::get('/import', function () {
     $books = file_get_contents("c:\wamp\www\books.txt");

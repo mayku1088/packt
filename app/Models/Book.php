@@ -10,6 +10,8 @@ class Book extends Model
 {
     use HasFactory;
 
+    protected $perPage = 15;
+
     protected $table = 'book';
 
     protected $fillable = ['id', 'title', 'author', 'genre', 'description', 'isbn', 'image', 'published', 'publisher'];
