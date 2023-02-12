@@ -3,7 +3,7 @@
     <head>
         
         <!-- Title -->
-        <title>Modern | Datatables</title>
+        <title>Packt | {{$title}}</title>
         
         <meta content="width=device-width, initial-scale=1" name="viewport"/>
         <meta charset="UTF-8">
@@ -26,7 +26,8 @@
         <link href="{{asset('admin/plugins/x-editable/bootstrap3-editable/css/bootstrap-editable.css')}}" rel="stylesheet" type="text/css">
         <link href="{{asset('admin/plugins/bootstrap-datepicker/css/datepicker3.css')}}" rel="stylesheet" type="text/css"/>
         
-        <!-- Theme Styles -->
+        <link href="{{asset('/admin/plugins/toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/> 
+        
         
         
         <!-- <script src="assets/plugins/3d-bold-navigation/js/modernizr.js"></script> -->
@@ -66,8 +67,8 @@
                 <div class="page-sidebar-inner">
                     <ul class="menu accordion-menu">
                         <li class="nav-heading"><span>Navigation</span></li>
-                        <li><a href="{{url('books')}}"><p>Books</p></a></li>
-                        <li><a href="{{url('add-book')}}"><p>Add book</p></a></li>
+                        <li class="{{$slug == 'books' ? 'active' : ''}}"><a href="{{url('books')}}"><p>Books</p></a></li>
+                        <li class="{{$slug == 'add-book' ? 'active' : ''}}"><a href="{{url('add-book')}}"><p>Add book</p></a></li>
                         <li><a href="profile.html"><p>Logout</p></a></li>
                     </ul>
                 </div><!-- Page Sidebar Inner -->

@@ -5,7 +5,7 @@
     
     <div class="page-title">
         <div class="container">
-            <h3>Add book</h3>
+            <h3>Edit book</h3>
         </div>
     </div>
     <div id="main-wrapper" class="container">
@@ -21,54 +21,56 @@
                             <div class="form-group">
                                 <label for="input-Default" class="col-sm-2 control-label">Title</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="title" class="form-control title"  placeholder="Enter title">
+                                    <input type="text" name="title" class="form-control title" value="{{$book->title}}" placeholder="Enter title">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="input-Default" class="col-sm-2 control-label">Author</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="author" class="form-control author"  placeholder="Enter author">
+                                    <input type="text" name="author" class="form-control author"  value="{{$book->author}}" placeholder="Enter author">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="input-Default" class="col-sm-2 control-label">Genre</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="genre" class="form-control genre"  placeholder="Enter genre">
+                                    <input type="text" name="genre" class="form-control genre"  value="{{$book->genre}}" placeholder="Enter genre">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="input-Default" class="col-sm-2 control-label">ISBN</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="isbn" class="form-control isbn"  placeholder="Enter ISBN">
+                                    <input type="text" name="isbn" class="form-control isbn"  value="{{$book->isbn}}" placeholder="Enter ISBN">
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Published date</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="published" class="form-control date-picker published">
+                                    <input type="text" name="published" class="form-control date-picker published" value="{{$book->published}}">
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <label for="input-Default" class="col-sm-2 control-label">Publisher</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="publisher" class="form-control publisher"  placeholder="Enter publisher">
+                                    <input type="text" name="publisher" class="form-control publisher"  value="{{$book->publisher}}" placeholder="Enter publisher">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="input-Default" class="col-sm-2 control-label">Description</label>
                                 <div class="col-sm-10">
-                                    <textarea name="description" class="form-control description"></textarea>
+                                    <textarea name="description" class="form-control description">{{$book->description}}</textarea>
                                 </div>
                             </div>
 
                             <div class="form-group">
+                                
                                 <label for="input-Default" class="col-sm-2 control-label">Cover image</label>
                                 <div class="col-sm-10">
+                                    <img src="{{$book->image_path}}" width="100px" />
                                     <input type="file" class="form-control image" />
                                 </div>
                             </div>
@@ -76,6 +78,8 @@
                                 
                                 <button type="submit" class="btn btn-primary col-sm-2">Submit</button>
                             </div>
+
+                            <input type="hidden" value="{{$book->id}}" class="id" />
                         </form>
                     </div>
                 </div>
@@ -129,7 +133,8 @@
         submitHandler:function(form){
             var formData = new FormData();
 
-    
+            formData.append('id', $('.id').val());
+
             formData.append('title', $('.title').val());
 
             formData.append('author', $('.author').val());
@@ -143,7 +148,7 @@
             formData.append('publisher', $('.publisher').val());
 
             formData.append('description', $('.description').val());
-            
+
             if($('.image')[0].files.length){
                 formData.append('image', $('.image')[0].files[0], $('.image')[0].files[0].name);
             }
@@ -165,8 +170,6 @@
                 hideWaiting();
                 
                 toastr.success(response.message);
-
-                form.reset();
                 
             })
             .fail(function(response) {
@@ -191,7 +194,6 @@
 
                 toastr.error('There are some issues with the form');
 
-                
             });
         }
     });

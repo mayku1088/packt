@@ -20,6 +20,8 @@ Route::get('/books', [\App\Http\Controllers\Admin\BookController::class, 'books'
 
 Route::get('/add-book', [\App\Http\Controllers\Admin\BookController::class, 'add_book']);
 
+Route::get('/book/{book_id}/edit', [\App\Http\Controllers\Admin\BookController::class, 'edit_book']);
+
 
 
 /*Route::get('/import', function () {

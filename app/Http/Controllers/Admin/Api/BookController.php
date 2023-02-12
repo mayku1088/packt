@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Admin\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Book;
+use App\Services\HelperService;
+use Validator;
+use Str;
 
 class BookController extends Controller
 {
@@ -26,7 +29,7 @@ class BookController extends Controller
                 [
                     'title' => __('Edit book'),
                     'icon' => 'fa fa-edit',
-                    'url' => url('/vendor/vendor_id/edit'),
+                    'url' => url('/book/book_id/edit'),
                     'class' => 'edit',
                     'status' => '',
                     'data' => ''
@@ -34,8 +37,8 @@ class BookController extends Controller
                 [
                     'title' => __('Delete book'),
                     'icon' => 'fa fa-trash',
-                    'url' => url('/vendor/vendor_id/delete'),
-                    'class' => 'delete-vendor',
+                    'url' => url('/book/book_id/delete'),
+                    'class' => 'delete-book',
                     'status' => '',
                     'data' => ''
                 ]
@@ -70,20 +73,117 @@ class BookController extends Controller
         echo json_encode($data);
     }
 
-    public function add_book(Request $request)
+    public function store_book(Request $request, HelperService $helperService)
     {
         //Validate
+        $rules = [
+            'title' => 'required',
+            'author' => 'required',
+            'genre' => 'required',
+            'isbn' => 'required',
+            'published' => 'required|date_format:d/m/Y',
+            'publisher' => 'required',
+            'description' => 'required'
+
+        ];
+
+        $messages = [
+            'title.required' => 'Title is required',
+            'author.required' => 'Author is required',
+            'genre.required' => 'Genre is required',
+            'isbn.required' => 'ISBN is required',
+            'published.required' => 'Published date is required',
+            'published.date' => 'Published date should be a valid date',
+            'publisher.required' => 'Publisher is required',
+            'description.required' => 'Description is required'
+        ];
+
+
+
+        $validator = Validator::make($request->all(), $rules, $messages);
+
+        if ($validator->fails()) {
+            return $helperService->displayErrors($validator);
+        }
 
         $data = [
             'title' => $request->title,
             'author' => $request->author,
             'genre' => $request->genre,
             'isbn' => $request->isbn,
-            'published' => '2018-09-18',
+            'published' => \Carbon\Carbon::createFromFormat('d/m/Y', $request->published)->toDateString(),
             'publisher' => $request->publisher,
             'description' => $request->description
         ];
 
-        Book::create($data);
+        $new = true;
+
+        if ($request->has('id')) {
+            $new = false;
+        }
+
+        if ($request->has('image')) {
+            $dir =  'book-covers/' . $request->isbn;
+
+            $image_path = $request->file('image')->store($dir);
+
+            $data['image'] = $image_path;
+        }
+
+        $id = $request->has('id') ? $request->id : NULL;
+
+        $book = Book::updateOrCreate(['id' => $id], $data);
+
+        $message = 'Book was added successfuly.';
+
+        if (!$new) {
+            $message = 'Book was updated successfuly.';
+        }
+
+        return response()->json(['result' => true, 'message' => $message]);
+    }
+
+    public function delete(Request $request)
+    {
+        $book = Book::find($request->id);
+
+        if ($book->id) {
+
+            $deleted = $book->delete();
+
+            if (!$deleted) {
+                return response()->json(['result' => false, 'message' => 'Sorry! Could not delete book!']);
+            }
+
+            return response()->json(['result' => true, 'message' => 'Book was deleted successfully.']);
+        } else {
+            return response()->json(['result' => false, 'message' => __('Book not found!')]);
+        }
+    }
+
+    public function delete_selected(Request $request)
+    {
+        $ids = explode(',', $request->ids);
+
+        $total_deleted = 0;
+
+        foreach ($ids as $id) {
+            $book = Book::find($id);
+
+            if ($book->id) {
+                $deleted = $book->delete();
+
+                if ($deleted) {
+                    $total_deleted += 1;
+                }
+            }
+        }
+
+        if (count($ids) == $total_deleted) {
+            //session()->flash('message', sprintf("%d %s deleted successfully.", $total_deleted, Str::plural('book', $total_deleted)));
+            return response()->json(['result' => true]);
+        } else {
+            return response()->json(['result' => false, 'message' => 'Sorry! Could not delete some books!']);
+        }
     }
 }

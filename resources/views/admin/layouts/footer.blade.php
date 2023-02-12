@@ -80,6 +80,8 @@
 <script src="assets/js/modern.min.js"></script>
 <script src="assets/js/pages/table-data.js"></script> -->
 
+<script src="{{asset('/admin/plugins/toastr/toastr.min.js')}}"></script>    
+
 <script src="{{asset('/admin/js/custom.js')}}"></script>    
 
 <script>
