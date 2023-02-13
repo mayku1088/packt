@@ -40,3 +40,4 @@ function displayErrors(form, errors, fields){
         
     });
 }
+

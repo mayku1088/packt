@@ -19,7 +19,7 @@ class BookController extends Controller
             return $current_page;
         });
 
-        $data = Book::paginate();
+        $data = Book::filter($request)->paginate();
 
         return response()->json($data);
     }

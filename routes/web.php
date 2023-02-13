@@ -24,6 +24,8 @@ Route::get('/book/{book_id}/edit', [\App\Http\Controllers\Admin\BookController::
 
 Route::get('/', [\App\Http\Controllers\Front\HomeController::class, 'home']);
 
+Route::get('/book/{book}', [\App\Http\Controllers\Front\HomeController::class, 'book']);
+
 /*Route::get('/import', function () {
     $books = file_get_contents("c:\wamp\www\books.txt");
 

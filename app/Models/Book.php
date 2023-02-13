@@ -55,4 +55,36 @@ class Book extends Model
 
         return $query;
     }
+
+    public function scopeFilter($query, $request)
+    {
+
+        if (!empty($request->keyword)) {
+            $keyword = $request->keyword;
+
+            if ($request->has('atts')) {
+                $q = [];
+
+                foreach ($request->atts as $attr) {
+                    $q[] = "$attr LIKE '%$keyword%'";
+                }
+
+                $like_q = implode(' OR ', $q);
+
+                $query = $query->whereRaw($like_q);
+            } else {
+                $query = $query->whereRaw("title like '%$keyword%'");
+            }
+        }
+
+        if (!empty($request->start) && !empty($request->end)) {
+            $start = \Carbon\Carbon::createFromFormat('d/m/Y', $request->start)->toDateString();
+
+            $end = \Carbon\Carbon::createFromFormat('d/m/Y', $request->end)->toDateString();
+
+            $query = $query->whereBetween('published', [$start, $end]);
+        }
+
+        return $query;
+    }
 }
