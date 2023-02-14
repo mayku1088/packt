@@ -12,16 +12,18 @@
 
     <link href="{{asset('/front/css/bootstrap-datepicker3.css')}}" rel="stylesheet" type="text/css">
 
+    <link href="{{asset('/admin/plugins/toastr/toastr.min.css')}}" rel="stylesheet" type="text/css"/> 
+
     <link href="{{asset('/front/css/style.css')}}" rel="stylesheet" type="text/css">
 </head>
 <body>
     <div class="container">
-        <div class="bg-white rounded d-flex align-items-center justify-content-between" id="header">
+        <!-- <div class="bg-white rounded d-flex align-items-center justify-content-between" id="header">
             <button class="btn btn-hide text-uppercase" type="button" data-toggle="collapse" data-target="#filterbar" aria-expanded="false" aria-controls="filterbar" id="filter-btn" onclick="changeBtnTxt()"> <span class="fas fa-angle-left" id="filter-angle"></span> <span id="btn-txt">Hide filters</span> </button> 
             <nav class="navbar navbar-expand-lg navbar-light pl-lg-0 pl-auto">
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#mynav" aria-controls="mynav" aria-expanded="false" aria-label="Toggle navigation" onclick="chnageIcon()" id="icon"> <span class="navbar-toggler-icon"></span> </button> 
                 <div class="collapse navbar-collapse" id="mynav">
-                    <!-- <ul class="navbar-nav d-lg-flex align-items-lg-center">
+                    <ul class="navbar-nav d-lg-flex align-items-lg-center">
                         <li class="nav-item active">
                             <select name="sort" id="sort">
                                 <option value="" hidden selected>Sort by</option>
@@ -42,10 +44,10 @@
                             <div class="font-weight-bold mx-2 result">18 from 200</div>
                         </li>
                         <li class="nav-item d-lg-none d-inline-flex"> </li>
-                    </ul> -->
+                    </ul> 
                 </div>
             </nav>
-            <!-- <div class="ml-auto mt-3 mr-2">
+            <div class="ml-auto mt-3 mr-2">
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <li class="page-item"> <a class="page-link" href="#" aria-label="Previous"> <span aria-hidden="true" class="font-weight-bold">&lt;</span> <span class="sr-only">Previous</span> </a> </li>
@@ -55,23 +57,23 @@
                         <li class="page-item"> <a class="page-link" href="#" aria-label="Next"> <span aria-hidden="true" class="font-weight-bold">&gt;</span> <span class="sr-only">Next</span> </a> </li>
                     </ul>
                 </nav>
-            </div> -->
-        </div>
+            </div>
+        </div> -->
         <div id="content" class="my-5">
             <div id="filterbar" class="collapse">
                 <div class="box border-bottom">
                     <form>
                         <div class="form-group text-center">
-                            <div class="btn-group" data-toggle="buttons"> 
-                                <button class="btn btn-success form-check-label reset-form"> Reset </button> 
-                                <button class="btn btn-success form-check-label filter-form"> Apply </button> 
-                            </div>
+                            
+                                <button type="button" class="btn btn-success reset-form"> Reset </button> 
+                                <button type="button" class="btn btn-success filter-form"> Apply </button> 
+                            
                         </div>
-                        <div> <input type="text" class="keyword" name="keyword" placeholder="Enter search term..."> </div>
+                        <div class="mb-3"> <input type="text" class="form-control keyword" name="keyword" placeholder="Enter search term..."> </div>
                         <div> <label class="tick">Title <input type="checkbox" checked="checked" name="atts[]" value="title"> <span class="check"></span> </label> </div>
                         <div> <label class="tick">Author <input type="checkbox" name="atts[]" value="author"> <span class="check"></span> </label> </div>
                         <div> <label class="tick">ISBN <input type="checkbox" name="atts[]" value="isbn"> <span class="check"></span> </label> </div>
-                        <div> <label class="tick">Genre <input type="checkbox" name="atts[]" value="genre"> <span class="check"></span> </label> </div>
+                        <div class="mb-3"> <label class="tick">Genre <input type="checkbox" name="atts[]" value="genre"> <span class="check"></span> </label> </div>
 
                         <label for="">Published date</label>
                         <div class="input-daterange input-group" id="datepicker">
@@ -92,9 +94,11 @@
                    
                 </div>
 
-                <div class="load-more-div text-center pt-md-4 pt-3" style="display:none">
-                    <a class="load-more btn btn-primary">Load more</a>
-                </div>
+                
+            </div>
+
+            <div class="load-more-div text-center pt-md-4 pt-3" style="display:none; width: 75%;float: right;">
+                <a class="load-more btn btn-primary">Load more</a>
             </div>
 
             
@@ -107,7 +111,12 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
 
+    <script src="{{asset('/admin/plugins/waiting/bootstrap-waitingfor.min.js')}}"></script>    
+
+    <script src="{{asset('/admin/plugins/toastr/toastr.min.js')}}"></script>  
+
     <script src="{{asset('front/js/bootstrap-datepicker.min.js')}}"></script>
+    
 
     <script id="mp_template" type="text/template">
         <div class="col-lg-4 col-md-6 pt-md-4 pt-3" onclick="redirect(@{{id}})">
@@ -190,13 +199,11 @@
                 data: data,
                 beforeSend:function(){
                     
-                    //showWaiting();
+                    showWaiting();
                 }
             })
             .done(function(response) {
-                //hideWaiting();
-                
-                //toastr.success(response.message);
+                hideWaiting();
 
                 var insert = false;
 
@@ -236,14 +243,23 @@
                 
             })
             .fail(function(response) {
-                //hideWaiting();
+                hideWaiting();
                 
                 var data = JSON.parse(response.responseText);
 
-                //toastr.error('There are some issues with the form');
+                toastr.error('There are some issues with the form');
 
                 
             });
+        }
+
+        function showWaiting(){
+            $('.loading').show();
+        }
+
+        function hideWaiting(){
+            
+            $('.loading').hide();
         }
 
         (function ($, undefined) {
@@ -327,5 +343,8 @@ function chnageIcon() {
 
     
     </script>
+
+
+    <div class="loading">Loading&#8230;</div>
 </body>
 </html>

@@ -48,7 +48,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Published date</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="published" class="form-control date-picker published">
+                                    <input type="text" name="published" class="form-control date-picker published" placeholder="Enter published date">
                                 </div>
                             </div>
                             
@@ -62,19 +62,19 @@
                             <div class="form-group">
                                 <label for="input-Default" class="col-sm-2 control-label">Description</label>
                                 <div class="col-sm-10">
-                                    <textarea name="description" class="form-control description"></textarea>
+                                    <textarea name="description" class="form-control description" placeholder="Mention about the book"></textarea>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="input-Default" class="col-sm-2 control-label">Cover image</label>
                                 <div class="col-sm-10">
-                                    <input type="file" class="form-control image" />
+                                    <input type="file" class="form-control image" accept="image/png, image/gif, image/jpeg" />
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group text-center">
                                 
-                                <button type="submit" class="btn btn-primary col-sm-2">Submit</button>
+                                <button type="submit" class="btn btn-primary">Save</button>
                             </div>
                         </form>
                     </div>
@@ -129,7 +129,8 @@
         submitHandler:function(form){
             var formData = new FormData();
 
-    
+            formData.append('_token', "{{ csrf_token() }}");
+
             formData.append('title', $('.title').val());
 
             formData.append('author', $('.author').val());
@@ -182,7 +183,8 @@
                         'isbn':'.isbn',
                         'published':'.published',
                         'publisher':'.publisher',
-                        'description':'.description'
+                        'description':'.description',
+                        'image' : '.image'
                     };
 
                     displayErrors($(form), data.errors, fields);

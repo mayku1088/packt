@@ -112,7 +112,7 @@
             "processing": "<div class='sp sp-circle'></div>",
         },
         "ajax": {
-            headers: { 'Authorization': 'Bearer ' + token },
+            headers: { },
             url: "{!! url('/api/get-books') !!}"
         }
       } );
@@ -155,7 +155,7 @@
                                 dataType: 'json',
                                 data: { "ids" : ids},
                                 beforeSend:function(xhr){
-                                    xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+                                    xhr.setRequestHeader('X-CSRF-TOKEN', '{{csrf_token()}}');
                                     showWaiting();
                                 }
                             })
@@ -210,7 +210,7 @@
                 dataType: 'json',
                 data: { "id" : id},
                 beforeSend:function(xhr){
-                    xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+                    xhr.setRequestHeader('X-CSRF-TOKEN', '{{csrf_token()}}');
                     showWaiting();
                 }
             })

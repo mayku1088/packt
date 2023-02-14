@@ -64,7 +64,7 @@
         <div class=" row">
             <div class="catalog-images col-md-5 col-sm-5">
               <div class="center-aligned-row row">
-                <div class=" col-md-2 col-sm-2">
+                <!-- <div class=" col-md-2 col-sm-2">
                   <div id="images" style="display:none">
                     <ul class="thumbnails" style="visibility:hidden">
                       <li class="pdp-thumbnail">
@@ -82,18 +82,17 @@
                       </li>
                     </ul>
                   </div>
-                </div>
-                <div class=" col-md-10 col-sm-10">
+                </div> -->
+                <div class=" col-md-12 col-sm-12">
                   <div id="medium-image-holder" class="clearfix" data-zoom-text="">
                     <div class="var-img-slider slick-initialized slick-slider">
                       <div class="slick-list draggable" tabindex="0">
-                        <div class="slick-track" style="opacity: 1; width: 336px; transform: translate3d(0px, 0px, 0px);">
-                          <div class="var-img-slide slick-slide slick-active" data-image-id="7900865" index="0" style="width: 336px;">
-                            <a class="variant-image zoom-init" id="img-id-1" href="{{$image_path}}" title="" style="outline-style: none; text-decoration: none;" rel="undefined">
+                        <div class="slick-track">
+                          <div class="var-img-slide slick-slide slick-active">
+                            <a class="variant-image zoom-init" href="{{$image_path}}" title="" style="outline-style: none; text-decoration: none;" rel="undefined">
                               <div class="zoomPad">
-                                <img alt="{{$title}}" title="{{$title}}" class="" loading="lazy" src="{{$image_path}}" itemprop="image" style="opacity: 1;">
-                                <div class="zoomPup" style="top: -1px; left: -1px; width: 328px; height: 403px; position: absolute; border-width: 1px; display: none;"></div>
-                                <div class="zoomPreload" style="visibility: hidden; top: 189px; left: 128px; position: absolute;">Loading zoom</div>
+                                <img alt="{{$title}}" title="{{$title}}" class="" loading="lazy" src="{{$image_path}}" itemprop="image" style="width:100%">
+                                
                               </div>
                             </a>
                           </div>
@@ -109,15 +108,56 @@
             <div class=" col-md-7 col-sm-7">
               <div class=" row">
                 <div class=" col-md-12 col-sm-12">
-                  <div id="title" data-catalog-sku="300134086">
+                  <div id="title" class="mb-3">
                     <h1 class="like-h3" itemprop="name">{{$title}}</h1>
                     <div class="span-10 contributors"> By <span class="ctbr-name">
-                        <a href="/">{{$author}}</a>
+                        {{$author}}
                       </span>
                       <span class="ctbr-role">(Author)</span>
                     </div>
                   </div>
-                 
+                  <div id="features" class="clearfix">
+                    <h3 class="section-header">Features</h3>
+                    <ul>
+                      
+                          <!-- <li class="clearfix">
+                            <label>
+                              Title
+                            </label>: {{$title}}
+                          </li>
+                      
+                          <li class="clearfix">
+                            <label>
+                              Author
+                            </label>: {{$author}}
+                          </li> -->
+                      
+                          <li class="clearfix">
+                            <label>
+                              ISBN
+                            </label>: {{$isbn}}
+                          </li>
+                      
+                          <li class="clearfix">
+                            <label>
+                              Genre
+                            </label>: {{$genre}}
+                          </li>
+    
+                          <li class="clearfix">
+                            <label>
+                              Published
+                            </label>: {{$published}}
+                          </li>
+    
+                          <li class="clearfix">
+                            <label>
+                              Publisher
+                            </label>: {{$publisher}}
+                          </li>
+                      
+                    </ul>
+                </div>
                 </div>
               </div>
               
@@ -125,7 +165,9 @@
             </div>
           </div>
 
-          <div class=" row"><div class=" col-md-12 col-sm-12">
+          
+
+          <div class=" row mt-3"><div class=" col-md-12 col-sm-12">
             <div id="description" class="clearfix">
               <h3 class="section-header">Description</h3>
               
@@ -133,11 +175,9 @@
               
             </div>
           
-          <div id="static_bundle" class="clearfix">
-              
-            </div>
+          
         
-            <div id="features" class="clearfix">
+            <!-- <div id="features" class="clearfix">
                 <h3 class="section-header">Features</h3>
                 <ul>
                   
@@ -178,7 +218,7 @@
                       </li>
                   
                 </ul>
-            </div>
+            </div> -->
           
                 
             

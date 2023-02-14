@@ -48,7 +48,7 @@
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Published date</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="published" class="form-control date-picker published" value="{{$book->published}}">
+                                    <input type="text" name="published" class="form-control date-picker published" placeholder="Enter published date" value="{{$book->published}}">
                                 </div>
                             </div>
                             
@@ -62,7 +62,7 @@
                             <div class="form-group">
                                 <label for="input-Default" class="col-sm-2 control-label">Description</label>
                                 <div class="col-sm-10">
-                                    <textarea name="description" class="form-control description">{{$book->description}}</textarea>
+                                    <textarea name="description" class="form-control description" placeholder="Mention about the book">{{$book->description}}</textarea>
                                 </div>
                             </div>
 
@@ -70,13 +70,13 @@
                                 
                                 <label for="input-Default" class="col-sm-2 control-label">Cover image</label>
                                 <div class="col-sm-10">
-                                    <img src="{{$book->image_path}}" width="100px" />
-                                    <input type="file" class="form-control image" />
+                                    <img src="{{$book->image_path}}" width="100px" style="margin-bottom:20px" />
+                                    <input type="file" class="form-control image" accept="image/png, image/gif, image/jpeg" />
                                 </div>
                             </div>
-                            <div class="form-group">
+                            <div class="form-group text-center">
                                 
-                                <button type="submit" class="btn btn-primary col-sm-2">Submit</button>
+                                <button type="submit" class="btn btn-primary">Update</button>
                             </div>
 
                             <input type="hidden" value="{{$book->id}}" class="id" />
@@ -133,6 +133,8 @@
         submitHandler:function(form){
             var formData = new FormData();
 
+            formData.append('_token', "{{ csrf_token() }}");
+            
             formData.append('id', $('.id').val());
 
             formData.append('title', $('.title').val());

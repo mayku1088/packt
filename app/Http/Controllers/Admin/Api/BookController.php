@@ -75,6 +75,12 @@ class BookController extends Controller
 
     public function store_book(Request $request, HelperService $helperService)
     {
+        $new = true;
+
+        if ($request->has('id')) {
+            $new = false;
+        }
+
         //Validate
         $rules = [
             'title' => 'required',
@@ -84,8 +90,11 @@ class BookController extends Controller
             'published' => 'required|date_format:d/m/Y',
             'publisher' => 'required',
             'description' => 'required'
-
         ];
+
+        if ($new) {
+            $rules['image'] = 'required';
+        }
 
         $messages = [
             'title.required' => 'Title is required',
@@ -95,7 +104,8 @@ class BookController extends Controller
             'published.required' => 'Published date is required',
             'published.date' => 'Published date should be a valid date',
             'publisher.required' => 'Publisher is required',
-            'description.required' => 'Description is required'
+            'description.required' => 'Description is required',
+            'image.required' => 'Cover image is required'
         ];
 
 
@@ -116,11 +126,7 @@ class BookController extends Controller
             'description' => $request->description
         ];
 
-        $new = true;
 
-        if ($request->has('id')) {
-            $new = false;
-        }
 
         if ($request->has('image')) {
             $dir =  'book-covers/' . $request->isbn;
@@ -180,8 +186,8 @@ class BookController extends Controller
         }
 
         if (count($ids) == $total_deleted) {
-            //session()->flash('message', sprintf("%d %s deleted successfully.", $total_deleted, Str::plural('book', $total_deleted)));
-            return response()->json(['result' => true]);
+
+            return response()->json(['result' => true, 'message' => sprintf("%d %s deleted successfully.", $total_deleted, Str::plural('book', $total_deleted))]);
         } else {
             return response()->json(['result' => false, 'message' => 'Sorry! Could not delete some books!']);
         }

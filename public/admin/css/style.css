@@ -3635,7 +3635,7 @@ tr.group:hover {
 }
 
 .page-horizontal-bar.page-header-fixed .horizontal-bar {
-    padding-top: 60px;
+    padding-top: 0px;
 }
 
 .page-horizontal-bar.page-sidebar-fixed .navbar {

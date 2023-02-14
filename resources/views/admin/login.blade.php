@@ -29,24 +29,20 @@
                         <div class="col-md-4 col-sm-4 col-md-10 center">
                             <div class="login-box">
                                 
-                                    <a href="javascript:void(0)" class="logo-name"><img src="{{asset('/admin/images/logo.png')}}" class="img-resposnive" alt="packt" /></a>
+                                    <a href="javascript:void(0)" class="logo-name text-center" style="margin-bottom:10px"><img src="{{asset('/admin/images/logo.svg')}}" class="img-resposnive" alt="packt" /></a>
                                 
-                                    <form method="POST" action="" accept-charset="UTF-8" id="user-login" novalidate="novalidate"><input name="_token" type="hidden" value="XlMNsc3JmY4ipOtAsNSkcV3Fz36dpNo1n7aTDtPU">
+                                    <form method="POST" action="" accept-charset="UTF-8" id="user-login">
                                         <div class="form-group float">
-                                        <input class="form-control email" placeholder="Indiquez l'adresse e-mail" autocomplete="off" name="email" type="email">
+                                            <input class="form-control email" placeholder="Enter email" autocomplete="off" name="email" type="email">
                                         </div>
                                         <div class="form-group float">
-                                            <input class="form-control password" placeholder="Indiquez le mot de passe" autocomplete="off" name="password" type="password" value="">
+                                            <input class="form-control password" placeholder="Enter password" autocomplete="off" name="password" type="password" value="">
                                         </div>
 
-                                        <div class="form-group float">
-                                            
-                                        
-                                        </div>
-                                        <button type="submit" class="btn btn-success btn-block round-button fill-btn">Connexion</button>
+                                        <button type="submit" class="btn btn-success btn-block round-button fill-btn">Login</button>
                                     </form>
 
-                                    <div class="floating"></div>
+                                    
                             
                                         
                             </div>
@@ -90,7 +86,8 @@
                     dataType: 'json',
                     data: { 
                         "email" : $('.email').val(),
-                        "password" : $('.password').val()
+                        "password" : $('.password').val(),
+                        "_token": "{{ csrf_token() }}",
                     },
                     beforeSend:function(){
                         showWaiting();

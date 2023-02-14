@@ -14,9 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('get-books', [\App\Http\Controllers\Admin\Api\BookController::class, 'get_books']);

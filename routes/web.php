@@ -14,13 +14,19 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/login', [\App\Http\Controllers\Admin\LoginController::class, 'login_form']);
+Route::get('/login', [\App\Http\Controllers\Admin\LoginController::class, 'login_form'])->name('login');
 
-Route::get('/books', [\App\Http\Controllers\Admin\BookController::class, 'books']);
+Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/books', [\App\Http\Controllers\Admin\BookController::class, 'books']);
 
-Route::get('/add-book', [\App\Http\Controllers\Admin\BookController::class, 'add_book']);
+    Route::get('/add-book', [\App\Http\Controllers\Admin\BookController::class, 'add_book']);
 
-Route::get('/book/{book_id}/edit', [\App\Http\Controllers\Admin\BookController::class, 'edit_book']);
+    Route::get('/book/{book_id}/edit', [\App\Http\Controllers\Admin\BookController::class, 'edit_book']);
+
+    Route::get('/logout', [\App\Http\Controllers\Admin\LoginController::class, 'logout']);
+});
+
+
 
 Route::get('/', [\App\Http\Controllers\Front\HomeController::class, 'home']);
 
