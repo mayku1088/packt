@@ -19,8 +19,20 @@ class BookController extends Controller
             return $current_page;
         });
 
-        $data = Book::filter($request)->paginate();
+        $data = Book::select('id', 'title', 'author', 'genre', 'image')->filter($request)->paginate();
 
-        return response()->json($data);
+        return response()->json(['result' => true, 'data' => $data]);
+    }
+
+    public function book(Request $request)
+    {
+
+        $data = Book::select('id', 'title', 'author', 'genre', 'image', 'isbn', 'published', 'publisher', 'description')->find($request->book_id);
+
+        if (!empty($data)) {
+            return response()->json(['result' => true, 'data' => $data]);
+        } else {
+            return response()->json(['result' => false, 'message' => 'No such book exists'], Response::HTTP_BAD_REQUEST);
+        }
     }
 }

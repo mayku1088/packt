@@ -150,7 +150,7 @@
             }
 
             $.ajax({
-                url: site_url + '/api/add-book',
+                url: site_url + '/api/save-book',
                 type: 'POST',
                 processData: false,
                 contentType: false,

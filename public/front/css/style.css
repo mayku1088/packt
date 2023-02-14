@@ -114,7 +114,8 @@ select {
 	background-color: #fff;
 	border: 1px solid #ddd;
 	border-radius: 15px;
-	float: left
+	float: left;
+	margin-top: 1.5rem;
 }
 
 #filterbar input[type="radio"] {
@@ -712,3 +713,48 @@ input[type=range]::-webkit-slider-thumb {
 	  transform: rotate(360deg);
 	}
   }
+
+
+  .section-header {
+	color: #454545;
+	font-size: 20px;
+	font-weight: 900;
+	text-transform: none;
+	padding-bottom: 12px;
+	border-bottom: 1px solid #ccc;
+}
+
+#product-detail-page #title h1 {
+	color: #454545;
+	font-size: 21px;
+	font-weight: 600;
+	margin-top: 0;
+}
+
+#product-detail-page .catalog-images>.row>div {
+padding: 0 5px;
+}
+
+#medium-image-holder {
+border: 1px solid #ccc;
+text-align: center;
+}
+
+#product-detail-page #title .contributors {
+	font-size: 12px;
+}
+
+#medium-image-holder {
+	min-height: 414px;
+}
+
+
+
+#product-detail-page #medium-image-holder .var-img-slider img {
+	margin: auto;
+	display: block;
+}
+
+#features ul{
+  list-style-type: none;
+}

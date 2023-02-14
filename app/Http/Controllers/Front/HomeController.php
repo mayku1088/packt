@@ -13,9 +13,9 @@ class HomeController extends Controller
         return view('front.home');
     }
 
-    public function book(Book $book)
+    public function book($book_id)
     {
 
-        return view('front.book', $book->toArray());
+        return view('front.book', ['book_id' => $book_id]);
     }
 }
