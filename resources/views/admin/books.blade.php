@@ -83,7 +83,9 @@
         }
     ];
 
-    
+    function returnAction(row_id){
+        return "<div class='text-center relative'><ul><li style='list-style-type: none;width: 30px;display:inline-block'><a data-id='" + row_id + "' '' data-placement='left' class='actions edit' href='http://localhost/packt/public/book/" + row_id + "/edit' title='Edit book'><i class='fa fa-edit'></i></a></li><li style='list-style-type: none;width: 30px;display:inline-block'><a data-id='" + row_id + "' '' data-placement='left' class='actions delete-book' href='http://localhost/packt/public/book/" + row_id + "/delete' title='Delete book'><i class='fa fa-trash'></i></a></li></ul></div>";
+    }
 
     $(document).ready(function() {
         table = $('#book-list').DataTable( {
@@ -92,7 +94,16 @@
             "columnDefs": [ {
                 "targets": [ 0, 5 ],
               "orderable": false
-          } ,
+          },
+          {
+            "targets": 5,
+            "data": "",
+            "render": function ( data, type, row, meta ) {
+                
+                return returnAction(row[0]);
+                
+            }
+        }  ,
           {width:"100px", "targets":[5]},
           {
             'targets': 0,

@@ -19,7 +19,11 @@ class BookController extends Controller
             return $current_page;
         });
 
-        $data = Book::select('id', 'title', 'author', 'genre', 'image')->filter($request)->paginate();
+        $data = Book::select('book.id', 'title', 'author', 'g.name as genre', 'image')
+            ->join('genre as g', 'g.id', '=', 'book.genre_id')
+            ->filter($request)
+            ->orderBy('book.created_at', 'desc')
+            ->paginate();
 
         return response()->json(['result' => true, 'data' => $data]);
     }
@@ -27,7 +31,9 @@ class BookController extends Controller
     public function book(Request $request)
     {
 
-        $data = Book::select('id', 'title', 'author', 'genre', 'image', 'isbn', 'published', 'publisher', 'description')->find($request->book_id);
+        $data = Book::select('title', 'author', 'g.name as genre', 'image', 'isbn', 'published', 'p.name as publisher', 'description')
+            ->join('genre as g', 'g.id', '=', 'book.genre_id')
+            ->join('publisher as p', 'p.id', '=', 'book.publisher_id')->find($request->book_id);
 
         if (!empty($data)) {
             return response()->json(['result' => true, 'data' => $data]);

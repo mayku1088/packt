@@ -21,48 +21,60 @@
                             <div class="form-group">
                                 <label for="input-Default" class="col-sm-2 control-label">Title</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="title" class="form-control title" value="{{$book->title}}" placeholder="Enter title">
+                                    <input type="text" name="title" class="form-control title" value="" placeholder="Enter title">
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label for="input-Default" class="col-sm-2 control-label">Author</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="author" class="form-control author"  value="{{$book->author}}" placeholder="Enter author">
+                                    <input type="text" name="author" class="form-control author"  value="" placeholder="Enter author">
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="input-Default" class="col-sm-2 control-label">Genre</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="genre" class="form-control genre"  value="{{$book->genre}}" placeholder="Enter genre">
+                                    
+                                    <select name="genre_id" class="form-control genre-id" placeholder="Enter genre">
+                                        <option value="">Select</option>
+                                        @foreach($genres as $genre)
+                                            <option value="{{$genre->id}}">{{$genre->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="input-Default" class="col-sm-2 control-label">ISBN</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="isbn" class="form-control isbn"  value="{{$book->isbn}}" placeholder="Enter ISBN">
+                                    <input type="text" name="isbn" class="form-control isbn"  value="" placeholder="Enter ISBN">
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <label class="col-sm-2 control-label">Published date</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="published" class="form-control date-picker published" placeholder="Enter published date" value="{{$book->published}}">
+                                    <input type="text" name="published" class="form-control date-picker published" placeholder="Enter published date" value="">
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <label for="input-Default" class="col-sm-2 control-label">Publisher</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="publisher" class="form-control publisher"  value="{{$book->publisher}}" placeholder="Enter publisher">
+                                    
+                                    <select name="publisher_id" class="form-control publisher-id"  placeholder="Enter publisher">
+                                        <option value="">Select</option>
+                                        @foreach($publishers as $publisher)
+                                            <option value="{{$publisher->id}}">{{$publisher->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="input-Default" class="col-sm-2 control-label">Description</label>
                                 <div class="col-sm-10">
-                                    <textarea name="description" class="form-control description" placeholder="Mention about the book">{{$book->description}}</textarea>
+                                    <textarea name="description" class="form-control description" placeholder="Mention about the book"></textarea>
                                 </div>
                             </div>
 
@@ -70,7 +82,7 @@
                                 
                                 <label for="input-Default" class="col-sm-2 control-label">Cover image</label>
                                 <div class="col-sm-10">
-                                    <img src="{{$book->image_path}}" width="100px" style="margin-bottom:20px" />
+                                    <img src="" width="100px" style="margin-bottom:20px" class="image-path" />
                                     <input type="file" class="form-control image" accept="image/png, image/gif, image/jpeg" />
                                 </div>
                             </div>
@@ -79,7 +91,7 @@
                                 <button type="submit" class="btn btn-primary">Update</button>
                             </div>
 
-                            <input type="hidden" value="{{$book->id}}" class="id" />
+                            <input type="hidden" value="" class="id" />
                         </form>
                     </div>
                 </div>
@@ -111,23 +123,73 @@
         autoclose: true
     });
 
+    $(document).ready(function(){
+
+        $.ajax({
+            url: site_url + '/api/get-book',
+            type: 'GET',
+            data: {book_id:{{$book_id}}},
+            beforeSend:function(){
+                
+                showWaiting();
+            }
+        })
+        .done(function(response) {
+            hideWaiting();
+
+            
+            var book = response.data;
+
+            $('.id').val(book.id);
+
+            $('.title').val(book.title);
+
+            $('.author').val(book.author);
+
+            $('.genre-id').val(book.genre_id);
+
+            $('.isbn').val(book.isbn);
+
+            $('.published').val(book.published);
+
+            $('.publisher-id').val(book.publisher_id);
+
+            $('.description').val(book.description);
+
+            $('.image-path').attr('src', book.image_path);
+            
+            document.title = 'Packt | Edit ' + response.data.title;
+            
+            
+        })
+        .fail(function(response) {
+            hideWaiting();
+            
+            var data = JSON.parse(response.responseText);
+
+            toastr.error(data.message);
+
+            
+        });
+    });
+
     $('#book-form').validate({
         rules:{
             title:{required:true},
             author:{required:true},
-            genre:{required:true},
+            genre_id:{required:true},
             isbn:{required:true},
             published:{required:true},
-            publisher:{required:true},
+            publisher_id:{required:true},
             description:{required:true}
         },
         messages:{
             title:{required:"Title is required"},
             author:{required:"Author is required"},
-            genre:{required:"Genre is required"},
+            genre_id:{required:"Genre is required"},
             isbn:{required:"ISBN is required"},
             published:{required:"Published date is required"},
-            publisher:{required:"Publisher is required"},
+            publisher_id:{required:"Publisher is required"},
             description:{required:"Description is required"}
         },
         submitHandler:function(form){
@@ -141,13 +203,13 @@
 
             formData.append('author', $('.author').val());
 
-            formData.append('genre', $('.genre').val());
+            formData.append('genre_id', $('.genre-id').val());
 
             formData.append('isbn', $('.isbn').val());
 
             formData.append('published', $('.published').val());
 
-            formData.append('publisher', $('.publisher').val());
+            formData.append('publisher_id', $('.publisher-id').val());
 
             formData.append('description', $('.description').val());
 
@@ -183,10 +245,10 @@
                     var fields = {
                         'title' : '.title',
                         'author' : '.author',
-                        'genre':'.genre',
+                        'genre_id':'.genre-id',
                         'isbn':'.isbn',
                         'published':'.published',
-                        'publisher':'.publisher',
+                        'publisher_id':'.publisher-id',
                         'description':'.description'
                     };
 

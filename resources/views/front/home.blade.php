@@ -14,7 +14,7 @@
                 <div> <label class="tick">Title <input type="checkbox" checked="checked" name="atts[]" value="title"> <span class="check"></span> </label> </div>
                 <div> <label class="tick">Author <input type="checkbox" name="atts[]" value="author"> <span class="check"></span> </label> </div>
                 <div> <label class="tick">ISBN <input type="checkbox" name="atts[]" value="isbn"> <span class="check"></span> </label> </div>
-                <div class="mb-3"> <label class="tick">Genre <input type="checkbox" name="atts[]" value="genre"> <span class="check"></span> </label> </div>
+                <div class="mb-3"> <label class="tick">Genre <input type="checkbox" name="atts[]" value="g.name"> <span class="check"></span> </label> </div>
 
                 <label for="">Published date</label>
                 <div class="input-daterange input-group" id="datepicker">

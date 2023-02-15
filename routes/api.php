@@ -14,20 +14,23 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('all-books', [\App\Http\Controllers\Front\Api\BookController::class, 'all_books']);
+
+Route::get('book', [\App\Http\Controllers\Front\Api\BookController::class, 'book']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
     Route::get('get-books', [\App\Http\Controllers\Admin\Api\BookController::class, 'get_books']);
 
     Route::post('save-book', [\App\Http\Controllers\Admin\Api\BookController::class, 'store_book']);
 
+    Route::get('get-book', [\App\Http\Controllers\Admin\Api\BookController::class, 'book']);
+
     Route::delete('book/delete', [\App\Http\Controllers\Admin\Api\BookController::class, 'delete']);
 
     Route::delete('book/delete-selected', [\App\Http\Controllers\Admin\Api\BookController::class, 'delete_selected']);
 });
 
-Route::get('all-books', [\App\Http\Controllers\Front\Api\BookController::class, 'all_books']);
 
-Route::get('book', [\App\Http\Controllers\Front\Api\BookController::class, 'book']);
 
 Route::controller(\App\Http\Controllers\Admin\Api\AuthController::class)->group(function () {
     Route::post('login', 'login');

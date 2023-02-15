@@ -34,7 +34,13 @@
                             <div class="form-group">
                                 <label for="input-Default" class="col-sm-2 control-label">Genre</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="genre" class="form-control genre"  placeholder="Enter genre">
+                                    
+                                    <select name="genre_id" class="form-control genre-id" placeholder="Enter genre">
+                                        <option value="">Select</option>
+                                        @foreach($genres as $genre)
+                                            <option value="{{$genre->id}}">{{$genre->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
@@ -55,7 +61,13 @@
                             <div class="form-group">
                                 <label for="input-Default" class="col-sm-2 control-label">Publisher</label>
                                 <div class="col-sm-10">
-                                    <input type="text" name="publisher" class="form-control publisher"  placeholder="Enter publisher">
+                                    
+                                    <select name="publisher_id" class="form-control publisher-id"  placeholder="Enter publisher">
+                                        <option value="">Select</option>
+                                        @foreach($publishers as $publisher)
+                                            <option value="{{$publisher->id}}">{{$publisher->name}}</option>
+                                        @endforeach
+                                    </select>
                                 </div>
                             </div>
 
@@ -111,19 +123,19 @@
         rules:{
             title:{required:true},
             author:{required:true},
-            genre:{required:true},
+            genre_id:{required:true},
             isbn:{required:true},
             published:{required:true},
-            publisher:{required:true},
+            publisher_id:{required:true},
             description:{required:true}
         },
         messages:{
             title:{required:"Title is required"},
             author:{required:"Author is required"},
-            genre:{required:"Genre is required"},
+            genre_id:{required:"Genre is required"},
             isbn:{required:"ISBN is required"},
             published:{required:"Published date is required"},
-            publisher:{required:"Publisher is required"},
+            publisher_id:{required:"Publisher is required"},
             description:{required:"Description is required"}
         },
         submitHandler:function(form){
@@ -135,13 +147,13 @@
 
             formData.append('author', $('.author').val());
 
-            formData.append('genre', $('.genre').val());
+            formData.append('genre_id', $('.genre-id').val());
 
             formData.append('isbn', $('.isbn').val());
 
             formData.append('published', $('.published').val());
 
-            formData.append('publisher', $('.publisher').val());
+            formData.append('publisher_id', $('.publisher-id').val());
 
             formData.append('description', $('.description').val());
             
@@ -179,10 +191,10 @@
                     var fields = {
                         'title' : '.title',
                         'author' : '.author',
-                        'genre':'.genre',
+                        'genre_id':'.genre-id',
                         'isbn':'.isbn',
                         'published':'.published',
-                        'publisher':'.publisher',
+                        'publisher_id':'.publisher-id',
                         'description':'.description',
                         'image' : '.image'
                     };

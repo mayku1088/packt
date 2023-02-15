@@ -43,7 +43,7 @@
               <div class="span-10 contributors"> By <span class="ctbr-name">
                   @{{author}}
                 </span>
-                <span class="ctbr-role">(Author)</span>
+                <!-- <span class="ctbr-role">(Author)</span> -->
               </div>
             </div>
             <div id="features" class="clearfix">

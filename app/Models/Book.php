@@ -14,7 +14,7 @@ class Book extends Model
 
     protected $table = 'book';
 
-    protected $fillable = ['id', 'title', 'author', 'genre', 'description', 'isbn', 'image', 'published', 'publisher'];
+    protected $fillable = ['id', 'title', 'author', 'genre_id', 'description', 'isbn', 'image', 'published', 'publisher_id'];
 
     protected $appends = ['image_path'];
 
@@ -36,7 +36,7 @@ class Book extends Model
 
     public function scopeColumnSort($query, $request)
     {
-        $columns = ['', 'title', 'author', 'genre', 'created_at', ''];
+        $columns = ['', 'title', 'author', 'g.name', 'created_at', ''];
 
         $order_column = $columns[$request->order[0]['column']];
 
@@ -51,7 +51,7 @@ class Book extends Model
     {
         $search_value = $request->search['value'];
 
-        $query = $query->whereRaw("(title like '%$search_value%' OR author like '%$search_value%' OR genre like '%$search_value%')");
+        $query = $query->whereRaw("(title like '%$search_value%' OR author like '%$search_value%' OR g.name like '%$search_value%')");
 
         return $query;
     }

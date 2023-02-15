@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use \App\Models\Book;
+use \App\Models\{Book, Genre, Publisher};
 use Auth;
 
 class BookController extends Controller
@@ -27,19 +27,33 @@ class BookController extends Controller
             'slug' => 'add-book'
         ];
 
+        $genres = Genre::select('id', 'name')->get();
+
+        $data['genres'] = $genres;
+
+        $publishers = Publisher::select('id', 'name')->get();
+
+        $data['publishers'] = $publishers;
+
         return view('admin.add-book', $data);
     }
 
     public function edit_book($book_id)
     {
 
-        $book = Book::find($book_id);
-
         $data = [
-            'title' => 'Edit ' . $book->title,
-            'book' => $book,
-            'slug' => ''
+            'title' => '',
+            'slug' => '',
+            'book_id' => $book_id
         ];
+
+        $genres = Genre::select('id', 'name')->get();
+
+        $data['genres'] = $genres;
+
+        $publishers = Publisher::select('id', 'name')->get();
+
+        $data['publishers'] = $publishers;
 
         return view('admin.edit-book', $data);
     }

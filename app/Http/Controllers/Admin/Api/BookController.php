@@ -17,7 +17,19 @@ class BookController extends Controller
     {
         $data = $book_service->get_books($request);
 
-        echo json_encode($data);
+        return response()->json($data);
+    }
+
+    public function book(Request $request)
+    {
+
+        $data = Book::select('book.id', 'title', 'author', 'genre_id', 'image', 'isbn', 'published', 'publisher_id', 'description')->find($request->book_id);
+
+        if (!empty($data)) {
+            return response()->json(['result' => true, 'data' => $data]);
+        } else {
+            return response()->json(['result' => false, 'message' => 'No such book exists'], Response::HTTP_BAD_REQUEST);
+        }
     }
 
     public function store_book(StoreBookRequest $request, BookService $book_service)
