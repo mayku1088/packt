@@ -17,14 +17,14 @@ function getLocalStorage(key){
 
 function displayErrors(form, errors, fields){
     $('label.error').remove();
-
+    
     $.each(errors, function(ind, obj){
         
-        if(obj.key in fields){
+        if(ind in fields){
             
-            var msg = obj.message;
+            var msg = obj;
 
-            var element = form.find(fields[obj.key]);
+            var element = form.find(fields[ind]);
             
 
             if(!element.next().is('.error')){

@@ -36,7 +36,7 @@ class Book extends Model
 
     public function scopeColumnSort($query, $request)
     {
-        $columns = ['', 'title', 'author', 'g.name', 'created_at', ''];
+        $columns = ['', 'title', 'author', 'g.name', 'id', ''];
 
         $order_column = $columns[$request->order[0]['column']];
 

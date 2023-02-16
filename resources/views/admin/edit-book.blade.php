@@ -17,7 +17,7 @@
                 <div class="panel panel-white">
                    
                     <div class="panel-body">
-                        <form class="form-horizontal" id="book-form">
+                        <form class="form-horizontal" id="book-form" style="display:none">
                             <div class="form-group">
                                 <label for="input-Default" class="col-sm-2 control-label">Title</label>
                                 <div class="col-sm-10">
@@ -126,7 +126,7 @@
     $(document).ready(function(){
 
         $.ajax({
-            url: site_url + '/api/get-book',
+            url: site_url + '/api/book/single',
             type: 'GET',
             data: {book_id:{{$book_id}}},
             beforeSend:function(){
@@ -152,6 +152,8 @@
 
             $('.published').val(book.published);
 
+            $('.date-picker').datepicker('update', book.published);
+
             $('.publisher-id').val(book.publisher_id);
 
             $('.description').val(book.description);
@@ -159,6 +161,8 @@
             $('.image-path').attr('src', book.image_path);
             
             document.title = 'Packt | Edit ' + response.data.title;
+
+            $('#book-form').show();
             
             
         })
@@ -218,7 +222,7 @@
             }
 
             $.ajax({
-                url: site_url + '/api/save-book',
+                url: site_url + '/api/book/save',
                 type: 'POST',
                 processData: false,
                 contentType: false,

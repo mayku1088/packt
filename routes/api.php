@@ -14,16 +14,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('all-books', [\App\Http\Controllers\Front\Api\BookController::class, 'all_books']);
+Route::get('books', [\App\Http\Controllers\Front\Api\BookController::class, 'all_books']);
 
 Route::get('book', [\App\Http\Controllers\Front\Api\BookController::class, 'book']);
 
 Route::middleware(['auth:sanctum'])->group(function () {
-    Route::get('get-books', [\App\Http\Controllers\Admin\Api\BookController::class, 'get_books']);
+    Route::get('book/all', [\App\Http\Controllers\Admin\Api\BookController::class, 'get_books']);
 
-    Route::post('save-book', [\App\Http\Controllers\Admin\Api\BookController::class, 'store_book']);
+    Route::post('book/save', [\App\Http\Controllers\Admin\Api\BookController::class, 'store_book'])->middleware('XssSanitizer');
 
-    Route::get('get-book', [\App\Http\Controllers\Admin\Api\BookController::class, 'book']);
+    Route::get('book/single', [\App\Http\Controllers\Admin\Api\BookController::class, 'book']);
 
     Route::delete('book/delete', [\App\Http\Controllers\Admin\Api\BookController::class, 'delete']);
 

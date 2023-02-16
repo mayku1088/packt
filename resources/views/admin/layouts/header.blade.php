@@ -33,6 +33,8 @@
         <!-- <script src="assets/plugins/3d-bold-navigation/js/modernizr.js"></script> -->
 
         <link href="{{asset('/admin/css/style.css')}}" rel="stylesheet" type="text/css"/>
+
+        <link rel="icon" type="image/x-icon" href="{{asset('favicon.ico')}}">
         
         
         @yield('styles')
@@ -47,20 +49,9 @@
         <nav class="cbp-spmenu cbp-spmenu-vertical cbp-spmenu-right" id="cbp-spmenu-s2">
             <h3><span class="pull-left">Sandra Smith</span> <a href="javascript:void(0);" class="pull-right" id="closeRight2"><i class="fa fa-angle-right"></i></a></h3>
             
-            <div class="chat-write">
-                <form class="form-horizontal" action="javascript:void(0);">
-                    <input type="text" class="form-control" placeholder="Say something">
-                </form>
-            </div>
+            
 		</nav>
-        <form class="search-form" action="#" method="GET">
-            <div class="input-group">
-                <input type="text" name="search" class="form-control search-input" placeholder="Search...">
-                <span class="input-group-btn">
-                    <button class="btn btn-default close-search waves-effect waves-button waves-classic" type="button"><i class="fa fa-times"></i></button>
-                </span>
-            </div><!-- Input Group -->
-        </form><!-- Search Form -->
+       
         <main class="page-content content-wrap">
            <div class="row">
             <div class="col-md-12 text-center" style="margin-top:10px">

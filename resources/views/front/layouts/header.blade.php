@@ -16,6 +16,8 @@
 
     <link href="{{asset('/front/css/style.css')}}" rel="stylesheet" type="text/css">
 
+    <link rel="icon" type="image/x-icon" href="{{asset('favicon.ico')}}">
+
     @yield('styles')
 </head>
 <body>

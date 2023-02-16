@@ -27,10 +27,10 @@ class StoreBookRequest extends FormRequest
         $rules = [
             'title' => 'required',
             'author' => 'required',
-            'genre_id' => 'required',
+            'genre_id' => 'required|exists:App\Models\Genre,id',
             'isbn' => 'required',
             'published' => 'required|date_format:d/m/Y',
-            'publisher_id' => 'required',
+            'publisher_id' => 'required||exists:App\Models\Publisher,id',
             'description' => 'required'
         ];
 
@@ -55,10 +55,12 @@ class StoreBookRequest extends FormRequest
             'title.required' => 'Title is required',
             'author.required' => 'Author is required',
             'genre_id.required' => 'Genre is required',
+            'genre_id.exists' => 'Invalid genre',
             'isbn.required' => 'ISBN is required',
             'published.required' => 'Published date is required',
             'published.date' => 'Published date should be a valid date',
             'publisher_id.required' => 'Publisher is required',
+            'publisher_id.exists' => 'Invalid publisher',
             'description.required' => 'Description is required',
             'image.required' => 'Cover image is required',
             'image.image' => 'Cover image should only be of type image'

@@ -3,11 +3,39 @@
 namespace App\Services;
 
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
 use App\Models\Book;
+use Illuminate\Pagination\Paginator;
+use Str;
 
 class BookService
 {
+
+    public function all_books(Request $request)
+    {
+        $current_page = $request->page;
+
+        Paginator::currentPageResolver(function () use ($current_page) {
+            return $current_page;
+        });
+
+        $data = Book::select('book.id', 'title', 'author', 'g.name as genre', 'image')
+            ->join('genre as g', 'g.id', '=', 'book.genre_id')
+            ->filter($request)
+            ->orderBy('book.id', 'desc')
+            ->paginate();
+
+        return $data;
+    }
+
+    public function book(Request $request)
+    {
+
+        $book = Book::select('book.id', 'title', 'author', 'g.name as genre', 'image', 'isbn', 'published', 'p.name as publisher', 'description')
+            ->join('genre as g', 'g.id', '=', 'book.genre_id')
+            ->join('publisher as p', 'p.id', '=', 'book.publisher_id')->find($request->book_id);
+
+        return $book;
+    }
 
     public function store(Request $request)
     {
@@ -77,5 +105,28 @@ class BookService
         ];
 
         return $data;
+    }
+
+    public function get_book(Request $request)
+    {
+        $book = Book::select('book.id', 'title', 'author', 'genre_id', 'image', 'isbn', 'published', 'publisher_id', 'description')->find($request->book_id);
+
+        return $book;
+    }
+
+    public function delete_book(Request $request)
+    {
+        Book::where('id', $request->id)->delete();
+
+        return ['result' => true, 'message' => 'Book deleted successfully'];
+    }
+
+    public function delete_selected(Request $request)
+    {
+        $ids = explode(',', $request->ids);
+
+        Book::whereIn('id', $ids)->delete();
+
+        return ['result' => true, 'message' => sprintf("%d %s deleted successfully.", count($ids), Str::plural('book', count($ids)))];
     }
 }

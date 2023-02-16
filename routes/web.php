@@ -26,8 +26,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/logout', [\App\Http\Controllers\Admin\LoginController::class, 'logout']);
 });
 
-
-
 Route::get('/', [\App\Http\Controllers\Front\HomeController::class, 'home']);
 
 Route::get('/book/{book_id}', [\App\Http\Controllers\Front\HomeController::class, 'book']);
@@ -38,6 +36,9 @@ Route::get('/book/{book_id}', [\App\Http\Controllers\Front\HomeController::class
     $books = json_decode($books, true);
 
     foreach ($books['data'] as $book) {
+        $book['genre_id'] = 1;
+
+        $book['publisher_id'] = 1;
         //dd($book);
         \App\Models\Book::create($book);
     }

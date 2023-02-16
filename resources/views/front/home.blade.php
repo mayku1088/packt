@@ -53,14 +53,14 @@
     <div class="col-lg-4 col-md-6 pt-md-4 pt-3">
         <a href="{{url('book/')}}/@{{id}}" target="_blank">
         <div class="card d-flex flex-column align-items-center">
-            <div class="product-name">@{{title}}</div>
+            <div class="product-name" style="color:#454545">@{{title}}</div>
             <div class="card-img"> <img src="@{{image_path}}" alt=""> </div>
             <div class="card-body pt-5">
                 <div class="text-muted text-center mt-auto">@{{genre}}</div>
                 
                 <div class="d-flex align-items-center price">
                     
-                    <div class="font-weight-bold">@{{author}}</div>
+                    <div class="font-weight-bold" style="color:#454545">By @{{author}}</div>
                 </div>
             </div>
         </div>
@@ -105,6 +105,8 @@
 
     $(document).ready(function(){
         loadBooks();
+
+        $('#filterbar').collapse(false);
     });
 
     $('.load-more').on('click', function(){
@@ -122,7 +124,7 @@
         }
 
         $.ajax({
-            url: site_url + '/api/all-books',
+            url: site_url + '/api/books',
             type: 'GET',
             data: data,
             beforeSend:function(){
@@ -181,7 +183,7 @@
             
             var data = JSON.parse(response.responseText);
 
-            toastr.error('There are some issues with the form');
+            toastr.error('Something went wrong!');
 
             
         });
@@ -189,10 +191,7 @@
 
 
 
-    // For Filters
-    $(document).ready(function(){
-        $('#filterbar').collapse(false);
-    });
+    
 
 
 </script>

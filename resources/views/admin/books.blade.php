@@ -124,7 +124,7 @@
         },
         "ajax": {
             headers: { },
-            url: "{!! url('/api/get-books') !!}"
+            url: "{!! url('/api/book/all') !!}"
         }
       } );
 
@@ -233,16 +233,18 @@
 
                     table.rows().draw(true);
 
-                    Toast.fire({type:'success', title:response.message});
+                    
+                    toastr.success(response.message);
                 }else{
-                    Toast.fire({type:'error', title: response.message});
+                    
+                    toastr.error(response.message);
                 }
                 
             })
             .fail(function(response) {
                 var data = response.responseJSON;
 
-                Toast.fire({type:'error', title: data.message});
+                toastr.error(data.message);
 
                 hideWaiting();
             });

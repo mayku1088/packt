@@ -5,11 +5,10 @@ namespace App\Http\Controllers\Admin\Api;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use App\Models\Book;
 use App\Services\BookService;
 use App\Http\Requests\StoreBookRequest;
-use Validator;
-use Str;
+
+
 
 class BookController extends Controller
 {
@@ -20,10 +19,10 @@ class BookController extends Controller
         return response()->json($data);
     }
 
-    public function book(Request $request)
+    public function book(Request $request, BookService $book_service)
     {
 
-        $data = Book::select('book.id', 'title', 'author', 'genre_id', 'image', 'isbn', 'published', 'publisher_id', 'description')->find($request->book_id);
+        $data = $book_service->get_book($request);
 
         if (!empty($data)) {
             return response()->json(['result' => true, 'data' => $data]);
@@ -55,47 +54,19 @@ class BookController extends Controller
         }
     }
 
-    public function delete(Request $request)
+    public function delete(Request $request, BookService $book_service)
     {
-        $book = Book::find($request->id);
 
-        if ($book->id) {
+        $data = $book_service->delete_book($request);
 
-            $deleted = $book->delete();
 
-            if (!$deleted) {
-                return response()->json(['result' => false, 'message' => 'Sorry! Could not delete book!']);
-            }
-
-            return response()->json(['result' => true, 'message' => 'Book was deleted successfully.']);
-        } else {
-            return response()->json(['result' => false, 'message' => __('Book not found!')]);
-        }
+        return response()->json($data);
     }
 
-    public function delete_selected(Request $request)
+    public function delete_selected(Request $request, BookService $book_service)
     {
-        $ids = explode(',', $request->ids);
+        $data = $book_service->delete_selected($request);
 
-        $total_deleted = 0;
-
-        foreach ($ids as $id) {
-            $book = Book::find($id);
-
-            if ($book->id) {
-                $deleted = $book->delete();
-
-                if ($deleted) {
-                    $total_deleted += 1;
-                }
-            }
-        }
-
-        if (count($ids) == $total_deleted) {
-
-            return response()->json(['result' => true, 'message' => sprintf("%d %s deleted successfully.", $total_deleted, Str::plural('book', $total_deleted))]);
-        } else {
-            return response()->json(['result' => false, 'message' => 'Sorry! Could not delete some books!']);
-        }
+        return response()->json($data);
     }
 }

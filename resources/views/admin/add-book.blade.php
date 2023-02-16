@@ -162,7 +162,7 @@
             }
 
             $.ajax({
-                url: site_url + '/api/save-book',
+                url: site_url + '/api/book/save',
                 type: 'POST',
                 processData: false,
                 contentType: false,
