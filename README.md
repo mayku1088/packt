@@ -45,7 +45,7 @@ Password: packt
 
 Url: http://localhost/project-dir/public/api/login
 
-Admin area only
+## Admin area only
 
 ## Login
 
@@ -131,7 +131,7 @@ Params
 
 -   ids (comma separated values eg. 34,45,67)
 
-Front area only
+## Front area only
 
 ## All books list
 
