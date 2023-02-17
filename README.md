@@ -2,11 +2,11 @@ Project name: Packt books
 
 Follow the below steps to get the project up and running
 
+-   cd into project root directory
+
 -   run composer install
 
 copy .env.example file and rename it to .env
-
--   cd into project root directory
 
 -   run php artisan key:generate
 
