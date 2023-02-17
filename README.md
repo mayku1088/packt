@@ -32,18 +32,18 @@ copy .env.example file and rename it to .env
 
 -   run php artisan storage:link
 
--   run http://localhost/<proj dir>/public/
+-   run http://localhost/project-dir/public/
 
 To access admin
 
--   http://localhost/<proj dir>/public/login
+-   http://localhost/project-dir/public/login
 
 Username: packt@gmail.com
 Password: packt
 
 ## APIs
 
-Url: http://localhost/<proj dir>/public/api/login
+Url: http://localhost/project-dir/public/api/login
 
 Admin area only
 
