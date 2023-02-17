@@ -37,9 +37,6 @@
                                     
                                     <select name="genre_id" class="form-control genre-id" placeholder="Enter genre">
                                         <option value="">Select</option>
-                                        @foreach($genres as $genre)
-                                            <option value="{{$genre->id}}">{{$genre->name}}</option>
-                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -64,9 +61,6 @@
                                     
                                     <select name="publisher_id" class="form-control publisher-id"  placeholder="Enter publisher">
                                         <option value="">Select</option>
-                                        @foreach($publishers as $publisher)
-                                            <option value="{{$publisher->id}}">{{$publisher->name}}</option>
-                                        @endforeach
                                     </select>
                                 </div>
                             </div>
@@ -116,6 +110,11 @@
 
     <script src="{{asset('/admin/plugins/bootstrap-datepicker/js/bootstrap-datepicker.js')}}"></script>
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/2.3.0/mustache.min.js"></script>
+
+    <script id="mp_template" type="text/template">
+        <option value="@{{id}}">@{{name}}</option>
+    </script>
 <script>
     $('.date-picker').datepicker({
         orientation: "top auto",
@@ -125,6 +124,13 @@
 
     $(document).ready(function(){
 
+        
+
+        loadGenre();
+
+    });
+
+    window.postPublisherLoad = function loadBook(){
         $.ajax({
             url: site_url + '/api/book/single',
             type: 'GET',
@@ -175,7 +181,7 @@
 
             
         });
-    });
+    }
 
     $('#book-form').validate({
         rules:{

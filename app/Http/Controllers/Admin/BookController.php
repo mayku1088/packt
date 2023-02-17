@@ -27,14 +27,6 @@ class BookController extends Controller
             'slug' => 'add-book'
         ];
 
-        $genres = Genre::select('id', 'name')->get();
-
-        $data['genres'] = $genres;
-
-        $publishers = Publisher::select('id', 'name')->get();
-
-        $data['publishers'] = $publishers;
-
         return view('admin.add-book', $data);
     }
 
@@ -46,14 +38,6 @@ class BookController extends Controller
             'slug' => '',
             'book_id' => $book_id
         ];
-
-        $genres = Genre::select('id', 'name')->get();
-
-        $data['genres'] = $genres;
-
-        $publishers = Publisher::select('id', 'name')->get();
-
-        $data['publishers'] = $publishers;
 
         return view('admin.edit-book', $data);
     }

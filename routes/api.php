@@ -28,6 +28,10 @@ Route::middleware(['auth:sanctum'])->group(function () {
     Route::delete('book/delete', [\App\Http\Controllers\Admin\Api\BookController::class, 'delete']);
 
     Route::delete('book/delete-selected', [\App\Http\Controllers\Admin\Api\BookController::class, 'delete_selected']);
+
+    Route::get('genre/all', [\App\Http\Controllers\Admin\Api\BookController::class, 'get_genres']);
+
+    Route::get('publisher/all', [\App\Http\Controllers\Admin\Api\BookController::class, 'get_publishers']);
 });
 
 

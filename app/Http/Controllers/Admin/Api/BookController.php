@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Services\BookService;
+use App\Services\GenreService;
+use App\Services\PublisherService;
 use App\Http\Requests\StoreBookRequest;
 
 
@@ -17,6 +19,20 @@ class BookController extends Controller
         $data = $book_service->get_books($request);
 
         return response()->json($data);
+    }
+
+    public function get_genres(Request $request, GenreService $genre_service)
+    {
+        $data = $genre_service->get_genres($request);
+
+        return response()->json(['result' => true, 'data' => $data]);
+    }
+
+    public function get_publishers(Request $request, PublisherService $publisher_service)
+    {
+        $data = $publisher_service->get_publishers($request);
+
+        return response()->json(['result' => true, 'data' => $data]);
     }
 
     public function book(Request $request, BookService $book_service)

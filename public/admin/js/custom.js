@@ -62,3 +62,79 @@ function displayErrors(form, errors, fields){
 
 })(jQuery);
 
+function loadGenre(){
+    $.ajax({
+        url: site_url + '/api/genre/all',
+        type: 'GET',
+        data: {},
+        beforeSend:function(){
+            
+            //showWaiting();
+        }
+    })
+    .done(function(response) {
+        //hideWaiting();
+
+        var template = $("#mp_template").html();
+        
+        var html = '';
+
+        for(genre of response.data){
+            html += Mustache.render(template, genre);
+        }
+
+        $('.genre-id').append(html);
+        
+        loadPublisher();
+        
+    })
+    .fail(function(response) {
+        //hideWaiting();
+        
+        var data = JSON.parse(response.responseText);
+
+        toastr.error(data.message);
+
+        
+    });
+}
+
+function loadPublisher(){
+    $.ajax({
+        url: site_url + '/api/publisher/all',
+        type: 'GET',
+        data: {},
+        beforeSend:function(){
+            
+            //showWaiting();
+        }
+    })
+    .done(function(response) {
+        //hideWaiting();
+
+        var template = $("#mp_template").html();
+        
+        var html = '';
+
+        for(genre of response.data){
+            html += Mustache.render(template, genre);
+        }
+
+        $('.publisher-id').append(html);
+        
+        if(typeof window.postPublisherLoad !== 'undefined'){
+            window.postPublisherLoad();
+        }
+        
+    })
+    .fail(function(response) {
+        //hideWaiting();
+        
+        var data = JSON.parse(response.responseText);
+
+        toastr.error(data.message);
+
+        
+    });
+}
+
