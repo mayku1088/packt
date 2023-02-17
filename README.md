@@ -125,7 +125,7 @@ Params
 ## Delete books
 
 Method - DELETE
-Endpoint - /book/delete
+Endpoint - /book/delete-selected
 
 Params
 
