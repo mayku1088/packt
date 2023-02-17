@@ -10,6 +10,8 @@ copy .env.example file and rename it to .env
 
 -   run php artisan key:generate
 
+-   create database in mysql eg. packt
+
 -   open .env file and set database connection values
     DB_CONNECTION=mysql
     DB_HOST=127.0.0.1
@@ -23,8 +25,6 @@ copy .env.example file and rename it to .env
     FILESYSTEM_DISK=public
 
     SESSION_DRIVER=cookie
-
--   create database in mysql eg. packt
 
 -   run php artisan migrate
 
