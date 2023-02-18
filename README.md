@@ -58,6 +58,8 @@ Params
 -   email (text)
 -   password (text)
 
+Use the token received in login API and send it using Bearer authentication for the rest of admin APIs
+
 ## Genre list
 
 Method - GET
